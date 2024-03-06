@@ -1,6 +1,7 @@
 import { createContext, useReducer } from "react";
 import { v4 as uuidv4 } from 'uuid';
 
+// The reducer - this is used to update the state, based on the action
 const AppReducer = (state, action) => {
   switch (action.type) {
     case "ADD_EXPENSE":
@@ -25,6 +26,7 @@ const AppReducer = (state, action) => {
   }
 };
 
+//  Sets the initial state when the app loads
 const initialState = {
   budget: 2000,
   expenses: [
@@ -36,9 +38,13 @@ const initialState = {
 
 export const AppContext = createContext();
 
+// Provider component - wraps the components we want to give access to the state
+// Accepts the children, which are the nested(wrapped) components
 export const AppProvider = (props) => {
+  // Sets up the app state. takes a reducer, and an initial state
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
+  // 5. Returns our context. Pass in the values we want to expose
   return (
     <AppContext.Provider
       value={{
